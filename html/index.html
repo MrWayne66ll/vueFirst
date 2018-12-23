@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+    <script src="../js/vue2.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{msg}}
+        <h3 v-text="number"></h3>
+        <div v-html="div"></div>
+        <div @click="test">{{msg}}</div>
+        <div :title="title">{{msg}}</div>
+        <input type="text" v-model="content">
+        <div><h3>{{content}}</h3></div>
+
+        姓：<input type="text" v-model="firstName">
+        名：<input type="text" v-model="lastName"><br>
+        <div>您好！{{fullName}}</div>
+        <h2>{{test_com}}</h2>
+        修改次数：<h3>{{count}}</h3>
+        <div v-if="show"><h1>hello world</h1></div>
+        <button id="change_but" @click="change">change</button>
+        <ul>
+            <li v-for="(item,index) of list" :key="index">{{item.name}} is {{item.age}} years old now!</li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    new Vue({
+        el : '#app',
+        // template : '<h1> hello {{msg}}</h1>',
+        data : {
+            msg : '123test',
+            number : 123,
+            div : '<h1>test div</h1>',
+            title : 'this is test',
+            content : 'this is content',
+            firstName : 'wa',
+            lastName : 'wa',
+            count : 0,
+            show : true ,
+            list : [
+                {id:1,name:"zhangsan",age:3},
+                {id:2,name:"lisi",age:3},
+            ]
+        },
+        methods : {
+            test : function () {
+                this.msg = "test"
+            },
+            change : function () {
+                this.show = !this.show
+            }
+        },
+        computed : {
+            fullName : function () {
+                return this.firstName + this.lastName
+            },
+            test_com : function () {
+                return "test - test"
+            }
+        },
+        watch : {
+            // firstName: function () {
+            //     this.count ++
+            // },
+            // lastName : function () {
+            //     this.count ++
+            // },
+            fullName : function () {
+                this.count ++
+            },
+            show : function () {
+                this.count ++
+            }
+        }
+    })
+</script>
+</html>
