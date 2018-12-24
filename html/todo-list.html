@@ -12,13 +12,31 @@
             <button @click="handleClick">提交</button>
         </div>
         <ul>
-            <li v-for="(item,index) of list" :key="index">
-                {{item}}
-            </li>
+            <!--<li v-for="(item,index) of list" :key="index">-->
+                <!--{{item}}-->
+            <!--</li>-->
+            <todo-item v-for="(item,index) of list" :key="index" :content="item" :index="index" @delete="handleDelete"></todo-item>
         </ul>
     </div>
 </body>
 <script type="text/javascript">
+
+    // 全局组件
+    Vue.component('todo-item',{
+        props: ['content','index'], // 定义外部传递过来的属性名称，通过属性的形式，外层组件将变量值传递给内部组件
+        template: "<li @click='handleClick'>{{content}}</li>",
+        methods:{
+            handleClick : function () {
+                this.$emit('delete', this.index)    // 定义向外触发的一个事件，事件名称为delete，携带的数据为此组件中的index值
+            }
+        }
+    })
+
+    // 局部组件
+    // var TodoItem = {
+    //     template: '<li>item</li>'
+    // }
+
     new Vue({
         el : "#app",
         data : {
@@ -29,8 +47,15 @@
             handleClick : function () {
                 this.list.push(this.inputValue)
                 this.inputValue = ""
+            },
+            handleDelete : function (index) {
+                this.list.splice(index)
             }
-        }
+        },
+        // 在此申明局部组件
+        // components: {
+        //     'todo-item': TodoItem
+        // }
     })
 </script>
 </html>
