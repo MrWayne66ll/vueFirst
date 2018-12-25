@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>es</title>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <article id="article">
+        <h1></h1>
+        <p1></p1>
+    </article>
+</body>
+<script type="text/javascript">
+    // 1. 在相同作用域下let不能重复申明一个变量
+    var a = 5
+    console.log(a)
+    var a = 6
+    console.log(a)
+    let b = 4       //前面已经申明过了a就不能再次申明，后面也不能申明
+    console.log(b)
+    // 2. let 申明的不能预解析
+    // 3. 暂时性死区
+    console.log(c)
+    var c = 10
+    let d = 11
+    console.log(d)
+</script>
+<script type="text/javascript">
+    // 1. 块级作用域
+    function fa() {
+        let a = 15          // 这边a的作用域是这个函数，出了这个函数就无法作用了
+        console.log(a)
+    }
+    fa()
+    // 2. var与for循环，这样效果是全部循环完之后i已经变成了4，所以以后的每次点击都是4
+    var lis = document.querySelectorAll('li')
+    for(var i=0;i<lis.length;i++){
+        lis[i].onclick = function () {
+            alert(i)
+        }
+    }
+    // 2. let与for循环，结果分别是0123，因为let出来的i是一致的
+    var lis = document.querySelectorAll('li')
+    for(let i=0;i<lis.length;i++){
+        lis[i].onclick = function () {
+            alert(i)
+        }
+    }
+</script>
+<script type="text/javascript">
+    const Person = {
+        name : "zhangsan",
+        age : 10
+    }
+    console.log(Person.name,Person.age)
+    Person.name = "lisi"
+    Person.age = 1
+    console.log(Person.name,Person.age)
+
+</script>
+<script type="text/javascript">
+    let [a1,b1,c1] = [1,2,3]
+    console.log(a1)
+    console.log(b1)
+    console.log(c1)
+    function flist() {
+        return [1,2,3]
+    }
+    let [a2,b2,c2] = flist()
+    console.log(a2)
+    console.log(b2)
+    console.log(c2)
+</script>
+<script type="text/javascript">
+    var obj = {
+        id : 1,
+        objname : '张三',
+        age : 30,
+        objlanguage : ['1','2','3'],
+        study : function () {
+            console.log('wori')
+        }
+    }
+    let {id,objname,age,objlanguage,study} = obj
+    console.log(objname,objlanguage)
+</script>
+<script type="text/javascript">
+    'use strict' //定义严格模式
+    let obj1 = {
+        title : 'test',
+        content : '123123123'
+    }
+    let obj2 = {
+        title : 'test2',
+        content : '.............................'
+    }
+    let articleElement = document.getElementById('article')
+    // 以前的方式
+    articleElement.innerHTML = "<h1>"+obj2.title+"</h1><p>"+obj2.content+"</p>"
+    // 现在的字符串模板
+    articleElement.innerHTML = `<h1>${obj2.title}</h1><p>${obj2.content}</p><h2>${f123()+"123"}</h2>`
+
+    function f123() {
+        return '123123123'
+    }
+</script>
+<script type="text/javascript">
+    // 1. 没有形参，函数只有一行代码
+    var fn1 = function () {
+        console.log('1')
+    }
+    var fn1_new = () => console.log('1new')
+    fn1();
+    fn1_new();
+    // 有一个参数
+    var fn2_new = a => console.log(a)
+    fn2_new('2new')
+    // 有两个参数
+    var fn3_new = (a,b) => {console.log(a);console.log(b);}
+    fn3_new("new3","newnew3")
+</script>
+<script type="text/javascript">
+    // 1. 用rest来代替argument
+    function sum() {
+        var sum = 0
+        for(var i=0;i<arguments.length;i++){
+            sum += arguments[i]
+        }
+        return sum
+    }
+    console.log(sum(0,1,2,3,4))
+    // 2. 将集合转化为数组
+    var str = 'abcd'
+    console.log(1,str);
+    console.log(2,[...str]);    // 转换为数组
+    // 3. 将数组转化为集合
+    var number = [1,2,3,4]
+    console.log(3,number)
+    console.log(4,...number)    // 将数组解压
+</script>
+
+</html>
