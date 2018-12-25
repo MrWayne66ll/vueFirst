@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test_router</title>
+    <!-- 第一步引入 -->
+    <script src="../js/vue2.js"></script>
+    <script src="../js/vue-router.js"></script>
+</head>
+<body>
+<!-- 第二部定义模板 -->
+<div id="app">
+    <router-link to="/login">登录</router-link>
+    <router-link to="/register/test">注册</router-link>
+    <!-- 占位符 -->
+    <router-view></router-view>
+</div>
+</body>
+<script type="text/javascript">
+    // 定义根组件
+    var App = Vue.extend()
+    // 定义注册组件
+    var register = Vue.extend({
+        template : '<h2>注册:{{oname}}</h2>',
+        data : function () {
+            return {
+                oname : this.$route.params.uname  // 通过这个获取到对应router中的变量值
+            }
+        },
+        // created : function () {
+        //     this.oname = this.$route.params.uname
+        // }
+    });
+    // 定义登录组件
+    var login = Vue.extend({
+        template : '<h2>登录</h2>'
+    });
+    // 定义路由并且注册路由规则
+    var routerNew = new VueRouter({
+        routes : [
+            {path: '/',redirect:'/login'},
+            {path: '/login',component:login},
+            {path: '/register/:uname',component:register},
+        ]
+    })
+    new Vue({
+        el : "#app",
+        router: routerNew
+    })
+</script>
+</html>
